@@ -17,7 +17,10 @@ export function MealSection({ title, mealType, foods, onAddFood, onRemoveFood }:
   return (
     <View style={styles.mealSection}>
       <View style={styles.mealHeader}>
-        <Text style={styles.mealTitle}>{title}</Text>
+        <View style={styles.mealTitleContainer}>
+          <Text style={styles.mealTitle}>{title}</Text>
+          <Text style={styles.caloriesText}>{totalCalories} cal</Text>
+        </View>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => onAddFood(mealType)}
@@ -58,10 +61,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 12,
   },
+  mealTitleContainer: {
+    flex: 1,
+  },
   mealTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: "#FFFFFF",
+  },
+  caloriesText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#00D4FF",
+    marginTop: 2,
   },
   addButton: {
     backgroundColor: "#00D4FF20",

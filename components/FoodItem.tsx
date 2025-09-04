@@ -13,7 +13,7 @@ export function FoodItem({ food, onPress }: FoodItemProps) {
       <View style={styles.foodItemContent}>
         <View style={styles.foodMainInfo}>
           <Text style={styles.foodName}>{food.name}</Text>
-          {food.brand && (
+          {food.brand && ( // only show brand if it exists
             <Text style={styles.foodBrand}>{food.brand}</Text>
           )}
         </View>

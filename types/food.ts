@@ -16,7 +16,7 @@ export interface MealData {
   snacks: FoodItem[];
 }
 
-export type MealType = keyof MealData;
+export type MealType = keyof MealData; // breakfast, lunch, dinner, snacks`
 
 export interface FormData {
   name: string;

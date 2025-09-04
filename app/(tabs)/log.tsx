@@ -14,6 +14,7 @@ export default function LogScreen() {
     openAddFoodModal,
     closeModal,
     addFood,
+    addFoodFromApi,
     removeFood,
     updateFormData,
   } = useFoodLog();
@@ -77,6 +78,7 @@ export default function LogScreen() {
         formData={formData}
         onClose={closeModal}
         onSave={addFood}
+        onSaveFromApi={addFoodFromApi}
         onUpdateFormData={updateFormData}
       />
     </SafeAreaView>
@@ -99,6 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "700",
     color: "#FFFFFF",
+    textAlign: "center",
     marginBottom: 4,
   },
   subtitle: {
@@ -106,6 +109,7 @@ const styles = StyleSheet.create({
     color: "#CCCCCC",
     fontWeight: "400",
     marginBottom: 30,
+    textAlign: "center",
   },
   caloriesText: {
     color: "#FFFFFF",

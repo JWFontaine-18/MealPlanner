@@ -1,0 +1,96 @@
+Exercise 2: State Management (Easy-Medium)
+
+  Goal: Understand how state works in hooks
+
+  Task: Add a "Clear All" button to each meal section
+
+  1. In hooks/useFoodLog.ts, add a new function:
+  const clearMeal = (mealType: MealType) => {
+    setMealData((prevData) => ({
+      ...prevData,
+      [mealType]: [],
+    }));
+  };
+
+  2. Return it from the hook (add to the return object)
+  3. Use it in MealSection by adding a clear button next to the add button
+  4. Pass the function as a prop to MealSection
+
+  What you'll learn: How state updates work and how hooks expose functionality
+
+  ---
+  Exercise 3: New Types (Medium)
+
+  Goal: Create and use custom types
+
+  Task: Add food categories (breakfast foods, proteins, etc.)
+
+  1. In types/food.ts, add:
+  export type FoodCategory = 'protein' | 'carbs' | 'vegetables' | 'fruits' | 'dairy' | 'other';
+
+  export interface FoodItem {
+    // ... existing properties
+    category?: FoodCategory; // Add this line
+  }
+
+  2. Update AddFoodModal to include a category picker
+  3. Display the category in FoodItem component with a colored badge
+
+  What you'll learn: How types evolve and enforce data structure
+
+  ---
+  Exercise 4: New Component (Medium)
+
+  Goal: Build a reusable component from scratch
+
+  Task: Create a NutritionSummary component
+
+  1. Create components/NutritionSummary.tsx
+  2. Component should accept all foods from all meals and show daily totals
+  3. Display: Total calories, protein, carbs, fat
+  4. Add it to the top of LogScreen
+
+  What you'll learn: Component creation, data processing, and composition
+
+  ---
+  Exercise 5: Enhanced Hook (Medium-Hard)
+
+  Goal: Add complex state management
+
+  Task: Add daily nutrition goals and progress tracking
+
+  1. Extend useFoodLog hook with:
+  const [dailyGoals, setDailyGoals] = useState({
+    calories: 2000,
+    protein: 150,
+    carbs: 250,
+    fat: 65
+  });
+
+  2. Add functions to calculate progress percentages
+  3. Create a progress bar component that shows goal completion
+  4. Add ability to edit goals
+
+  What you'll learn: Complex state management and hook composition
+
+  ---
+  Exercise 6: Advanced Types (Hard)
+
+  Goal: Use advanced TypeScript features
+
+  Task: Create a meal planning system with type safety
+
+  1. Create new types:
+  export interface MealPlan {
+    date: string;
+    meals: MealData;
+    targetCalories: number;
+  }
+
+  export type WeeklyPlan = Record<string, MealPlan>; // 7 days
+
+  2. Create a useMealPlanner hook
+  3. Add navigation to a meal planning screen
+  4. Implement save/load functionality with type-safe data
+
+  What you'll learn: Advanced types, data persistence, and complex app architecture

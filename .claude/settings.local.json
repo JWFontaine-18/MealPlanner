@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(curl:*)",
+      "WebSearch",
+      "WebFetch(domain:fdc.nal.usda.gov)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
