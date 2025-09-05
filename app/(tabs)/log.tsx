@@ -1,9 +1,10 @@
 import { AddFoodModal } from "@/components/AddFoodModal";
-import { MealSection } from "@/components/MealSection";
+import { MealSection } from "@/components/FoodLog";
 import { useFoodLog } from "@/hooks/useFoodLog";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { logScreenStyles as styles } from '@/styles/screens/LogScreen';
 
 export default function LogScreen() {
   const {
@@ -17,12 +18,8 @@ export default function LogScreen() {
     addFoodFromApi,
     removeFood,
     updateFormData,
+    getDayCalories,
   } = useFoodLog();
-
-  const totalCalories = mealData.breakfast.reduce((acc, food) => acc + food.calories, 0) +
-    mealData.lunch.reduce((acc, food) => acc + food.calories, 0) +
-    mealData.dinner.reduce((acc, food) => acc + food.calories, 0) +
-    mealData.snacks.reduce((acc, food) => acc + food.calories, 0);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,7 +32,7 @@ export default function LogScreen() {
           <Text style={styles.subtitle}>Track your daily meals</Text>
           <View>
             <Text style={styles.caloriesText}>
-              Total Calories: {totalCalories}
+              Total Calories: {getDayCalories()}
             </Text>
           </View>
           <MealSection
@@ -85,37 +82,3 @@ export default function LogScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0A0A0A",
-  },
-  scrollView: {
-    flex: 1,
-  },
-  content: {
-    padding: 20,
-    paddingTop: 10,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "700",
-    color: "#FFFFFF",
-    textAlign: "center",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#CCCCCC",
-    fontWeight: "400",
-    marginBottom: 30,
-    textAlign: "center",
-  },
-  caloriesText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 12,
-  }
-});

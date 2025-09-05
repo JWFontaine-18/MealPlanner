@@ -38,3 +38,6 @@ yarn-error.*
 
 app-example
 CLAUDE.md
+.claude/settings.local.json
+Features/editable-food-names.md
+Features/project-architecture.md

@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { FoodItem as FoodItemType } from '@/types/food';
+import { foodItemStyles as styles } from '@/styles/components/FoodItem';
 
 interface FoodItemProps {
   food: FoodItemType;
@@ -30,44 +31,3 @@ export function FoodItem({ food, onPress }: FoodItemProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  foodItem: {
-    backgroundColor: "#2A2A2A",
-    borderRadius: 8,
-    marginBottom: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-  },
-  foodItemContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  foodMainInfo: {
-    flex: 1,
-  },
-  foodName: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 2,
-  },
-  foodBrand: {
-    color: "#AAAAAA",
-    fontSize: 14,
-    fontStyle: "italic",
-  },
-  foodNutrition: {
-    alignItems: "flex-end",
-  },
-  foodCalories: {
-    color: "#00D4FF",
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 2,
-  },
-  foodMacros: {
-    color: "#CCCCCC",
-    fontSize: 12,
-  },
-});

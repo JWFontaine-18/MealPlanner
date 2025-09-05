@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, FlatList, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, TextInput, FlatList, Text, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { searchFoods, convertUsdaFood } from '@/services/foodApi';
 import { SearchResultItem } from './SearchResultItem';
 import { MealType } from '@/types/food';
+import { foodSearchStyles as styles } from '@/styles/components/FoodSearch';
 
 interface FoodSearchProps {
   selectedMeal: MealType;
-  onFoodSelected: (nutritionData: any, meal: MealType) => void;
   onFoodSelectedForCustomizing: (nutritionData: any) => void;
-  onClose: () => void;
 }
 
-export function FoodSearch({ selectedMeal, onFoodSelected, onFoodSelectedForCustomizing }: FoodSearchProps) {
+export function FoodSearch({ selectedMeal, onFoodSelectedForCustomizing }: FoodSearchProps) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,15 +46,7 @@ export function FoodSearch({ selectedMeal, onFoodSelected, onFoodSelectedForCust
   }, [query]);
 
   const handleFoodSelect = (food: any) => {
-    onFoodSelectedForCustomizing({
-      name: food.name,
-      brand: food.brand,
-      calories: food.calories,
-      protein: food.protein,
-      carbs: food.carbs,
-      fat: food.fat,
-      serving: food.serving,
-    });
+    onFoodSelectedForCustomizing(food);
   };
 
   return (
@@ -116,45 +107,3 @@ export function FoodSearch({ selectedMeal, onFoodSelected, onFoodSelectedForCust
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0A0A0A',
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1A1A1A',
-    borderRadius: 12,
-    margin: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  searchInput: {
-    flex: 1,
-    color: '#FFFFFF',
-    fontSize: 16,
-    marginLeft: 12,
-  },
-  content: {
-    flex: 1,
-  },
-  centerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 32,
-  },
-  errorText: {
-    color: '#FF6B6B',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  emptyText: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: '600',
-    marginTop: 16,
-    textAlign: 'center',
-  },
-});
