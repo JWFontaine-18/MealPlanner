@@ -340,6 +340,9 @@ export function AddFoodModal({
           baseCarbs={selectedFood.carbs}
           baseFat={selectedFood.fat}
           baseServing={selectedFood.serving}
+          householdServing={selectedFood.householdServing}
+          servingSize={selectedFood.servingSize}
+          servingSizeUnit={selectedFood.servingSizeUnit}
           onServingChange={setServingMultiplier}
         />
         <View style={styles.customizeFooter}>

@@ -35,7 +35,7 @@ export function FoodSearch({ selectedMeal, onFoodSelected, onFoodSelectedForCust
           .filter((food: any) => food.calories > 0)
           .sort((a: any, b: any) => a.name.split(' ').length - b.name.split(' ').length);
         setResults(converted);
-      } catch (err) {
+      } catch {
         setError('Search failed. Try again.');
         setResults([]);
       } finally {
@@ -101,7 +101,7 @@ export function FoodSearch({ selectedMeal, onFoodSelected, onFoodSelectedForCust
 
         {!isLoading && !error && results.length === 0 && query.length >= 2 && (
           <View style={styles.centerContainer}>
-            <Text style={styles.emptyText}>No foods found for "{query}"</Text>
+            <Text style={styles.emptyText}>No foods found for &quot;{query}&quot;</Text>
           </View>
         )}
 

@@ -7,6 +7,9 @@ export interface FoodItem {
   carbs: number;
   fat: number;
   brand?: string;
+  householdServing?: string;
+  servingSize?: number;
+  servingSizeUnit?: string;
 }
 
 export interface MealData {

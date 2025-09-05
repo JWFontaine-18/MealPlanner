@@ -10,15 +10,69 @@ interface ServingSelectorProps {
   baseCarbs: number;
   baseFat: number;
   baseServing: number;
+  householdServing?: string;
+  servingSize?: number;
+  servingSizeUnit?: string;
   onServingChange: (multiplier: number) => void;
 }
 
-const SERVING_UNITS = [
+const DEFAULT_UNITS = [
   { label: 'g', multiplier: 1, step: 25 },
   { label: 'oz', multiplier: 28.35, step: 1 },
   { label: 'cup', multiplier: 240, step: 0.25 },
   { label: 'tbsp', multiplier: 15, step: 1 },
 ];
+
+// Common serving patterns with their typical weights
+const SERVING_PATTERNS = [
+  { pattern: /\begg\b/i, unit: 'egg', weight: 50 },
+  { pattern: /\bbanana\b/i, unit: 'banana', weight: 120 },
+  { pattern: /\bapple\b/i, unit: 'apple', weight: 180 },
+  { pattern: /\borange\b/i, unit: 'orange', weight: 150 },
+  { pattern: /\bslice\b|\bbread\b/i, unit: 'slice', weight: 25 },
+  { pattern: /\bbreast\b|\bchicken breast\b/i, unit: 'breast', weight: 170 },
+  { pattern: /\bpotato\b/i, unit: 'potato', weight: 150 },
+  { pattern: /\bcarrot\b/i, unit: 'carrot', weight: 60 },
+  { pattern: /\btomato\b/i, unit: 'tomato', weight: 120 },
+  { pattern: /\bpeach\b/i, unit: 'peach', weight: 150 },
+  { pattern: /\bpear\b/i, unit: 'pear', weight: 180 },
+  { pattern: /\bstrawberry\b/i, unit: 'strawberry', weight: 12 },
+  { pattern: /\bgrape\b/i, unit: 'grape', weight: 5 },
+  { pattern: /\bmuffin\b/i, unit: 'muffin', weight: 60 },
+  { pattern: /\bcookie\b/i, unit: 'cookie', weight: 20 },
+];
+
+function getContextualServingUnits(foodName: string, householdServing?: string, servingSize?: number, servingSizeUnit?: string) {
+  const units = [...DEFAULT_UNITS];
+  
+  // First priority: Use USDA's own household serving if available
+  if (householdServing && servingSize && servingSizeUnit) {
+    let multiplier = servingSize;
+    if (servingSizeUnit !== 'GRM') {
+      multiplier = servingSize * 28.35; // Convert oz to grams
+    }
+    
+    units.unshift({
+      label: householdServing.toLowerCase().replace(/^\d+\s*/, ''), // Remove leading numbers
+      multiplier,
+      step: 1,
+    });
+  } else {
+    // Second priority: Pattern matching for common foods
+    for (const pattern of SERVING_PATTERNS) {
+      if (pattern.pattern.test(foodName)) {
+        units.unshift({
+          label: pattern.unit,
+          multiplier: pattern.weight,
+          step: 1,
+        });
+        break; // Use first match only
+      }
+    }
+  }
+  
+  return units;
+}
 
 export function ServingSelector({
   foodName,
@@ -28,9 +82,13 @@ export function ServingSelector({
   baseCarbs,
   baseFat,
   baseServing,
+  householdServing,
+  servingSize,
+  servingSizeUnit,
   onServingChange,
 }: ServingSelectorProps) {
-  const [selectedUnit, setSelectedUnit] = useState(SERVING_UNITS[0]);
+  const servingUnits = getContextualServingUnits(foodName, householdServing, servingSize, servingSizeUnit);
+  const [selectedUnit, setSelectedUnit] = useState(servingUnits[0]);
   const [amount, setAmount] = useState(1);
 
   const multiplier = (amount * selectedUnit.multiplier) / baseServing;
@@ -80,7 +138,7 @@ export function ServingSelector({
         </View>
 
         <View style={styles.unitSelector}>
-          {SERVING_UNITS.map((unit) => (
+          {servingUnits.map((unit) => (
             <TouchableOpacity
               key={unit.label}
               style={[

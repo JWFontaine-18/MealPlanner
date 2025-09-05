@@ -23,6 +23,11 @@ export function convertUsdaFood(usdaFood: any) {
     return nutrient ? nutrient.value : 0;
   };
 
+  // Extract serving information
+  const householdServing = usdaFood.householdServingFullText || '';
+  const servingSize = usdaFood.servingSize || 100;
+  const servingSizeUnit = usdaFood.servingSizeUnit || 'GRM';
+
   return {
     id: usdaFood.fdcId.toString(),
     name: usdaFood.description || 'Unknown Food',
@@ -32,5 +37,8 @@ export function convertUsdaFood(usdaFood: any) {
     carbs: Math.round(getNutrient('205') * 10) / 10,
     fat: Math.round(getNutrient('204') * 10) / 10,
     serving: 100,
+    householdServing,
+    servingSize,
+    servingSizeUnit,
   };
 }
